@@ -11,8 +11,4 @@ export type NavLink = {
   href: string
 }
 
-export type Page = {
-  id: string
-  name: string
-  slug: string
-}
+export type Page = string  
