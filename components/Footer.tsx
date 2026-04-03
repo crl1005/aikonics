@@ -12,7 +12,7 @@ interface FooterProps {
 export default function Footer({ page, setPage }: FooterProps) {
   return (
     <footer id="contact" className="border-t border-slate-800 bg-[rgba(15,23,42,0.9)]">
-      <div className="max-w-6xl mx-auto flex items-center justify-between px-10 py-4">
+      <div className="flex flex-col md:flex-row items-center justify-between gap-4 px-6 md:px-10 py-6">
         <Logo onClick={() => { setPage("home"); window.scrollTo(0, 0); }} />
         <nav>
           <NavLinks page={page} setPage={setPage} />
