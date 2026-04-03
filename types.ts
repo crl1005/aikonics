@@ -1,6 +1,6 @@
 export interface Video {
   slug: string;
-  img: string;        // ← change 'url' to 'img'
+  img: string;
   title: string;
   tag: string;
   videoSrc?: string;
