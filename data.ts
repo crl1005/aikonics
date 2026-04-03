@@ -2,13 +2,12 @@ import { Video, NavLink } from "@/types";
 
 export const VIDEOS: Video[] = [
   {
-    slug: "golden-hour-mountains",
+    slug: "sample-video",
     img: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80",
-    title: "Golden Hour in the Mountains",
-    tag: "Nature",
-  },
-  // ... add all your other videos here
-];
+    title: "Sample Video",
+    tag: "Nature"
+  }
+]
 
 export const NAV_LINKS: NavLink[] = [
   { label: "Home", href: "#hero" },

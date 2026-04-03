@@ -1,15 +1,14 @@
-export type Video = {
-  id: string
-  title: string
-  url: string
-  thumbnail?: string
-  description?: string
-  slug: string
+export interface Video {
+  slug: string;
+  img: string;        // ← change 'url' to 'img'
+  title: string;
+  tag: string;
+  videoSrc?: string;
 }
 
-export type NavLink = {
-  label: string
-  href: string
+export interface NavLink {
+  label: string;
+  href: string;
 }
 
-export type Page = string  
+export type Page = "home" | "gallery";
