@@ -4,6 +4,7 @@ export type Video = {
   url: string
   thumbnail?: string
   description?: string
+  slug: string
 }
 
 export type NavLink = {
