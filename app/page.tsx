@@ -1,5 +1,4 @@
-﻿export const runtime = 'edge';
-import ClientHome from "@/components/ClientHome";
+﻿import ClientHome from "@/components/ClientHome";
 
 export default function Home() {
   return <ClientHome />;
