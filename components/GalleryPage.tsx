@@ -1,3 +1,5 @@
+'use client';
+
 import VideoCard from "@/components/VideoCard";
 import { VIDEOS } from "@/data";
 import type { Page } from "@/types";
