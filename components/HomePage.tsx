@@ -17,7 +17,7 @@ export default function HomePage({ setPage }: HomePageProps) {
           <span className="text-[11px] tracking-[0.2em] uppercase text-slate-500">
             A personal archive
           </span>
-          <h1 className="font-serif text-5xl md:text-6xl lg:text-7xl font-light leading-tight text-slate-100 m-0">
+          <h1 className="font-serif text-6xl md:text-7xl lg:text-8xl font-light leading-tight text-slate-100 m-0">
             Every<br />moment<br />
             <em className="text-sky-300 not-italic">matters.</em>
           </h1>
@@ -33,11 +33,10 @@ export default function HomePage({ setPage }: HomePageProps) {
           <img
             src="/images/aiko.png"
             alt="A captured moment"
-            className="w-full h-full object-cover opacity-40 md:opacity-70 transition-opacity duration-1000 hover:opacity-100"
-            style={{ objectPosition: '60% center' }}
+            className="w-full h-full object-cover opacity-60 md:opacity-80 transition-opacity duration-1000 hover:opacity-100"
+            style={{ objectPosition: 'right top' }}
           />
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-950/40 to-transparent" />
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/30 to-transparent" />
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-950/20 to-transparent" />
         </div>
       </section>
 
