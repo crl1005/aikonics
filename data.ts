@@ -6,6 +6,7 @@ export const VIDEOS: Video[] = [
     title: "Sample Video",
     url: "https://your-video-url.com",
     thumbnail: "",
-    description: "Sample description"
+    description: "Sample description",
+    slug: "sample-video"  
   }
 ]
