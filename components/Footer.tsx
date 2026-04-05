@@ -73,7 +73,7 @@ export default function Footer({ page, setPage }: FooterProps) {
             onClick={() => { setPage("home"); window.scrollTo(0, 0); }}
             style={{ background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left', padding: 0 }}
           >
-            <div className="footer-logo" style={{ fontSize: '1.2rem', fontWeight: 300, color: '#2c1f0e', lineHeight: 1 }}>Aikonics</div>
+            <div className="footer-logo" style={{ fontSize: '1.2rem', fontWeight: 300, color: '#2c1f0e', lineHeight: 1 }}>Aikonic</div>
             <div style={{ fontSize: '8px', letterSpacing: '0.4em', textTransform: 'uppercase', color: '#b8936a', marginTop: '2px' }}>Journey</div>
           </button>
 

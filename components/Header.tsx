@@ -99,7 +99,7 @@ export default function Header({ page, setPage }: HeaderProps) {
         <div className="header-inner">
           {/* Logo */}
           <button onClick={() => goTo("home")} style={{ background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left', padding: 0 }}>
-            <div className="header-logo-text" style={{ fontSize: '1.35rem', fontWeight: 300, color: '#2c1f0e', lineHeight: 1, letterSpacing: '0.01em' }}>Aikonics</div>
+            <div className="header-logo-text" style={{ fontSize: '1.35rem', fontWeight: 300, color: '#2c1f0e', lineHeight: 1, letterSpacing: '0.01em' }}>Aikonic</div>
             <div style={{ fontSize: '8px', letterSpacing: '0.4em', textTransform: 'uppercase', color: '#b8936a', marginTop: '2px' }}>Journey</div>
           </button>
 
