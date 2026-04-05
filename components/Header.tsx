@@ -35,35 +35,98 @@ export default function Header({ page, setPage }: HeaderProps) {
   }
 
   return (
-    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-      scrolled ? "bg-[#080603]/95 backdrop-blur-xl border-b border-amber-900/20 py-3" : "bg-transparent py-6"
-    }`}>
-      <div className="max-w-7xl mx-auto flex items-center justify-between px-6 md:px-10">
-        <button onClick={() => goTo("home")} className="flex flex-col items-start leading-none group">
-          <span className="font-serif text-xl text-amber-100 group-hover:text-amber-300 transition-colors duration-300">Aikonics</span>
-          <span className="text-[9px] tracking-[0.35em] uppercase text-amber-700 group-hover:text-amber-500 transition-colors duration-300">Journey</span>
-        </button>
+    <>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=DM+Sans:wght@300;400&display=swap');
+        .header-root { font-family: 'DM Sans', sans-serif; }
+        .header-logo-text { font-family: 'Cormorant Garamond', serif; }
+        .nav-btn {
+          font-size: 10px;
+          letter-spacing: 0.2em;
+          text-transform: uppercase;
+          color: #6b5a45;
+          background: none;
+          border: none;
+          cursor: pointer;
+          padding: 4px 0;
+          transition: color 0.2s;
+          position: relative;
+        }
+        .nav-btn::after {
+          content: '';
+          position: absolute;
+          bottom: -2px; left: 0; right: 0;
+          height: 1px;
+          background: #b8936a;
+          transform: scaleX(0);
+          transition: transform 0.25s ease;
+          transform-origin: left;
+        }
+        .nav-btn:hover { color: #2c1f0e; }
+        .nav-btn:hover::after { transform: scaleX(1); }
+        .nav-btn.active { color: #b8936a; }
+        .nav-btn.active::after { transform: scaleX(1); }
 
-        <nav className="hidden md:flex items-center gap-8">
-          <button onClick={() => scrollTo("#work")} className="text-[11px] tracking-[0.2em] uppercase text-stone-400 hover:text-amber-200 transition-colors">Moments</button>
-          <button onClick={() => scrollTo("#about")} className="text-[11px] tracking-[0.2em] uppercase text-stone-400 hover:text-amber-200 transition-colors">About</button>
-          <button onClick={() => goTo("contact")} className={`text-[11px] tracking-[0.2em] uppercase transition-colors ${page === "contact" ? "text-amber-400" : "text-stone-400 hover:text-amber-200"}`}>Contact</button>
-        </nav>
+        .hidden-mobile { display: flex; }
+        .show-mobile { display: none !important; }
 
-        <button className="md:hidden flex flex-col gap-1.5 p-2" onClick={() => setMenuOpen(!menuOpen)}>
-          <span className={`block w-5 h-px bg-amber-200 transition-all duration-300 origin-center ${menuOpen ? "rotate-45 translate-y-[7px]" : ""}`} />
-          <span className={`block w-5 h-px bg-amber-200 transition-all duration-300 ${menuOpen ? "opacity-0" : ""}`} />
-          <span className={`block w-5 h-px bg-amber-200 transition-all duration-300 origin-center ${menuOpen ? "-rotate-45 -translate-y-[7px]" : ""}`} />
-        </button>
-      </div>
+        @media (max-width: 768px) {
+          .hidden-mobile { display: none !important; }
+          .show-mobile { display: flex !important; }
+        }
+      `}</style>
 
-      {menuOpen && (
-        <div className="md:hidden bg-[#080603]/98 backdrop-blur-xl border-t border-amber-900/20 px-6 py-6 flex flex-col gap-5">
-          <button onClick={() => scrollTo("#work")} className="text-left text-[12px] tracking-[0.25em] uppercase text-stone-300 hover:text-amber-300 transition-colors">Moments</button>
-          <button onClick={() => scrollTo("#about")} className="text-left text-[12px] tracking-[0.25em] uppercase text-stone-300 hover:text-amber-300 transition-colors">About</button>
-          <button onClick={() => goTo("contact")} className="text-left text-[12px] tracking-[0.25em] uppercase text-stone-300 hover:text-amber-300 transition-colors">Contact</button>
+      <header
+        className="header-root"
+        style={{
+          position: 'fixed', top: 0, left: 0, right: 0, zIndex: 500,
+          transition: 'all 0.4s ease',
+          background: scrolled ? 'rgba(245,240,232,0.96)' : 'transparent',
+          backdropFilter: scrolled ? 'blur(16px)' : 'none',
+          borderBottom: scrolled ? '1px solid rgba(201,185,154,0.4)' : '1px solid transparent',
+          padding: scrolled ? '14px 0' : '24px 0',
+        }}
+      >
+        <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 56px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+
+          {/* Logo */}
+          <button onClick={() => goTo("home")} style={{ background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left', padding: 0 }}>
+            <div className="header-logo-text" style={{ fontSize: '1.35rem', fontWeight: 300, color: '#2c1f0e', lineHeight: 1, letterSpacing: '0.01em' }}>Aikonics</div>
+            <div style={{ fontSize: '8px', letterSpacing: '0.4em', textTransform: 'uppercase', color: '#b8936a', marginTop: '2px' }}>Journey</div>
+          </button>
+
+          {/* Desktop nav */}
+          <nav className="hidden-mobile" style={{ alignItems: 'center', gap: '36px' }}>
+            <button className="nav-btn" onClick={() => scrollTo("#work")}>Moments</button>
+            <button className="nav-btn" onClick={() => scrollTo("#about")}>About</button>
+            <button className={`nav-btn ${page === 'contact' ? 'active' : ''}`} onClick={() => goTo("contact")}>Contact</button>
+          </nav>
+
+          {/* Mobile hamburger */}
+          <button
+            onClick={() => setMenuOpen(!menuOpen)}
+            className="show-mobile"
+            style={{ background: 'none', border: 'none', cursor: 'pointer', flexDirection: 'column', gap: '5px', padding: '4px' }}
+          >
+            <span style={{ display: 'block', width: '22px', height: '1px', background: '#2c1f0e', transition: 'all 0.3s', transform: menuOpen ? 'rotate(45deg) translate(4px, 4px)' : 'none' }} />
+            <span style={{ display: 'block', width: '22px', height: '1px', background: '#2c1f0e', transition: 'all 0.3s', opacity: menuOpen ? 0 : 1 }} />
+            <span style={{ display: 'block', width: '22px', height: '1px', background: '#2c1f0e', transition: 'all 0.3s', transform: menuOpen ? 'rotate(-45deg) translate(4px, -4px)' : 'none' }} />
+          </button>
         </div>
-      )}
-    </header>
+
+        {/* Mobile menu */}
+        {menuOpen && (
+          <div style={{
+            background: 'rgba(245,240,232,0.98)', backdropFilter: 'blur(16px)',
+            borderTop: '1px solid rgba(201,185,154,0.4)',
+            padding: '24px 56px', display: 'flex', flexDirection: 'column', gap: '20px',
+          }}>
+            <button className="nav-btn" onClick={() => scrollTo("#work")}>Moments</button>
+            <button className="nav-btn" onClick={() => scrollTo("#about")}>About</button>
+            <button className="nav-btn" onClick={() => goTo("contact")}>Contact</button>
+          </div>
+        )}
+      </header>
+    </>
   );
 }

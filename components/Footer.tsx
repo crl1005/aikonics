@@ -18,19 +18,48 @@ export default function Footer({ page, setPage }: FooterProps) {
   }
 
   return (
-    <footer className="border-t border-amber-900/20 bg-[#080603]">
-      <div className="max-w-7xl mx-auto px-6 md:px-10 py-10 flex flex-col md:flex-row items-center justify-between gap-6">
-        <button onClick={() => { setPage("home"); window.scrollTo(0, 0); }} className="flex flex-col items-start leading-none group">
-          <span className="font-serif text-lg text-amber-100 group-hover:text-amber-300 transition-colors duration-300">Aikonics</span>
-          <span className="text-[9px] tracking-[0.35em] uppercase text-amber-800 group-hover:text-amber-600 transition-colors duration-300">Journey</span>
-        </button>
-        <div className="flex items-center gap-8">
-          <button onClick={() => scrollTo("#work")} className="text-[10px] tracking-[0.2em] uppercase text-stone-500 hover:text-amber-400 transition-colors">Moments</button>
-          <button onClick={() => scrollTo("#about")} className="text-[10px] tracking-[0.2em] uppercase text-stone-500 hover:text-amber-400 transition-colors">About</button>
-          <button onClick={() => { setPage("contact"); window.scrollTo(0, 0); }} className="text-[10px] tracking-[0.2em] uppercase text-stone-500 hover:text-amber-400 transition-colors">Contact</button>
+    <>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=DM+Sans:wght@300;400&display=swap');
+        .footer-root { font-family: 'DM Sans', sans-serif; }
+        .footer-logo { font-family: 'Cormorant Garamond', serif; }
+        .footer-link {
+          font-size: 10px;
+          letter-spacing: 0.2em;
+          text-transform: uppercase;
+          color: #8a7055;
+          background: none;
+          border: none;
+          cursor: pointer;
+          transition: color 0.2s;
+          padding: 0;
+        }
+        .footer-link:hover { color: #2c1f0e; }
+      `}</style>
+
+      <footer className="footer-root" style={{ background: '#ede7db', borderTop: '1px solid #d6c9b4' }}>
+        <div style={{
+          maxWidth: '1280px', margin: '0 auto', padding: '40px 56px',
+          display: 'flex', flexWrap: 'wrap', alignItems: 'center',
+          justifyContent: 'space-between', gap: '20px',
+        }}>
+          <button
+            onClick={() => { setPage("home"); window.scrollTo(0, 0); }}
+            style={{ background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left', padding: 0 }}
+          >
+            <div className="footer-logo" style={{ fontSize: '1.2rem', fontWeight: 300, color: '#2c1f0e', lineHeight: 1 }}>Aikonics</div>
+            <div style={{ fontSize: '8px', letterSpacing: '0.4em', textTransform: 'uppercase', color: '#b8936a', marginTop: '2px' }}>Journey</div>
+          </button>
+
+          <div style={{ display: 'flex', alignItems: 'center', gap: '28px' }}>
+            <button className="footer-link" onClick={() => scrollTo("#work")}>Moments</button>
+            <button className="footer-link" onClick={() => scrollTo("#about")}>About</button>
+            <button className="footer-link" onClick={() => { setPage("contact"); window.scrollTo(0, 0); }}>Contact</button>
+          </div>
+
+          <p style={{ fontSize: '10px', letterSpacing: '0.2em', color: '#b8a88a', margin: 0 }}>© 2026 Aikonics Journey</p>
         </div>
-        <p className="text-[10px] tracking-widest text-stone-700 m-0">© 2026 Aikonics Journey</p>
-      </div>
-    </footer>
+      </footer>
+    </>
   );
 }

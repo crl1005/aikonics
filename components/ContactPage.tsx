@@ -15,14 +15,11 @@ export default function ContactPage({ setPage }: ContactPageProps) {
   const [message, setMessage] = useState("");
   const [status, setStatus]   = useState<Status>("idle");
 
-  // Load EmailJS script
   useEffect(() => {
     const script = document.createElement("script");
     script.src = "https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js";
     script.async = true;
-    script.onload = () => {
-      (window as any).emailjs.init("qEU-0DmLXKuNoME6V");
-    };
+    script.onload = () => { (window as any).emailjs.init("qEU-0DmLXKuNoME6V"); };
     document.head.appendChild(script);
     return () => { document.head.removeChild(script); };
   }, []);
@@ -33,133 +30,118 @@ export default function ContactPage({ setPage }: ContactPageProps) {
     setStatus("sending");
     try {
       await (window as any).emailjs.send(
-        "service_90wrkcq",
-        "template_iij258t",
+        "service_90wrkcq", "template_iij258t",
         { from_name: name, from_email: email, message, to_email: "aiko.esguerra@gmail.com" }
       );
       setStatus("success");
       setName(""); setEmail(""); setMessage("");
-    } catch {
-      setStatus("error");
-    }
+    } catch { setStatus("error"); }
   }
 
+  const baseInput: React.CSSProperties = {
+    width: '100%', background: 'transparent', border: 'none',
+    borderBottom: '1px solid #c9b99a', padding: '12px 0',
+    fontSize: '0.875rem', color: '#2c1f0e', outline: 'none',
+    fontFamily: 'DM Sans, sans-serif', transition: 'border-color 0.2s',
+  };
+
   return (
-    <div className="min-h-screen bg-[#080603] pt-32 pb-24">
-      <div className="max-w-7xl mx-auto px-6 md:px-10">
+    <>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;1,300&family=DM+Sans:wght@300;400&display=swap');
+        .c-serif { font-family: 'Cormorant Garamond', serif; }
+        .c-root  { font-family: 'DM Sans', sans-serif; }
+        .c-field::placeholder { color: #c9b99a; }
+        .c-field:focus { border-bottom-color: #b8936a !important; }
+        .c-btn {
+          display: inline-flex; align-items: center; gap: 10px;
+          font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+          color: #2c1f0e; border: 1px solid #2c1f0e; border-radius: 999px;
+          padding: 14px 28px; background: transparent; cursor: pointer;
+          transition: all 0.3s; font-family: 'DM Sans', sans-serif;
+        }
+        .c-btn:hover:not(:disabled) { background: #2c1f0e; color: #f5f0e8; }
+        .c-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .spin { animation: spin 1s linear infinite; }
+      `}</style>
 
-        {/* Header */}
-        <div className="mb-20">
-          <p className="text-[10px] tracking-[0.4em] uppercase text-amber-700 mb-4">Get in touch</p>
-          <h1 className="font-serif text-6xl md:text-7xl font-light text-amber-50 leading-tight">
-            Let's talk<br /><em className="not-italic text-amber-400">about moments.</em>
-          </h1>
-        </div>
+      <div className="c-root" style={{ minHeight: '100vh', background: '#f5f0e8', paddingTop: '128px', paddingBottom: '96px' }}>
+        <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 56px' }}>
 
-        <div className="grid md:grid-cols-2 gap-20 items-start">
-          {/* Left — info */}
-          <div className="flex flex-col gap-12">
-            <p className="text-sm leading-8 text-stone-400">
-              Whether you want to share a memory, collaborate, or just say hello — I'd love to hear from you.
-              Every conversation starts with a moment.
-            </p>
-
-            <div className="flex flex-col gap-6">
-              <div className="flex flex-col gap-1">
-                <p className="text-[10px] tracking-[0.3em] uppercase text-amber-700">Email</p>
-                <a href="mailto:aiko.esguerra@gmail.com" className="text-sm text-stone-300 hover:text-amber-300 transition-colors">
-                  aiko.esguerra@gmail.com
-                </a>
-              </div>
-              <div className="flex flex-col gap-1">
-                <p className="text-[10px] tracking-[0.3em] uppercase text-amber-700">Based in</p>
-                <p className="text-sm text-stone-400">Philippines</p>
-              </div>
-            </div>
-
-            <div className="border-t border-amber-900/20 pt-8">
-              <p className="text-[10px] tracking-[0.3em] uppercase text-amber-700 mb-4">Response time</p>
-              <p className="text-sm text-stone-500">Usually within 24–48 hours.</p>
-            </div>
+          <div style={{ marginBottom: '80px' }}>
+            <p style={{ fontSize: '10px', letterSpacing: '0.4em', textTransform: 'uppercase', color: '#b8936a', marginBottom: '16px' }}>Get in touch</p>
+            <h1 className="c-serif" style={{ fontSize: 'clamp(3rem, 6vw, 5.5rem)', fontWeight: 300, color: '#2c1f0e', lineHeight: 0.95, margin: 0 }}>
+              Let's talk<br /><em style={{ color: '#b8936a' }}>about moments.</em>
+            </h1>
           </div>
 
-          {/* Right — form */}
-          <form onSubmit={handleSubmit} className="flex flex-col gap-6">
-            <div className="flex flex-col gap-2">
-              <label className="text-[10px] tracking-[0.3em] uppercase text-stone-600">Your name</label>
-              <input
-                type="text"
-                value={name}
-                onChange={e => setName(e.target.value)}
-                placeholder="What should I call you?"
-                required
-                disabled={status === "sending"}
-                className="w-full bg-transparent border-b border-stone-800 py-3 text-sm text-amber-100 placeholder-stone-700 outline-none focus:border-amber-700 transition-colors disabled:opacity-50"
-              />
-            </div>
-
-            <div className="flex flex-col gap-2">
-              <label className="text-[10px] tracking-[0.3em] uppercase text-stone-600">Email address</label>
-              <input
-                type="email"
-                value={email}
-                onChange={e => setEmail(e.target.value)}
-                placeholder="your@email.com"
-                required
-                disabled={status === "sending"}
-                className="w-full bg-transparent border-b border-stone-800 py-3 text-sm text-amber-100 placeholder-stone-700 outline-none focus:border-amber-700 transition-colors disabled:opacity-50"
-              />
-            </div>
-
-            <div className="flex flex-col gap-2">
-              <label className="text-[10px] tracking-[0.3em] uppercase text-stone-600">Message</label>
-              <textarea
-                value={message}
-                onChange={e => setMessage(e.target.value)}
-                placeholder="Tell me about a moment…"
-                required
-                rows={5}
-                disabled={status === "sending"}
-                className="w-full bg-transparent border-b border-stone-800 py-3 text-sm text-amber-100 placeholder-stone-700 outline-none focus:border-amber-700 transition-colors resize-none disabled:opacity-50"
-              />
-            </div>
-
-            {/* Status messages */}
-            {status === "success" && (
-              <div className="flex items-center gap-3 text-sm text-emerald-400 border border-emerald-800/40 rounded-xl px-4 py-3 bg-emerald-500/5">
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 8l4 4 8-8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
-                Message sent! I'll get back to you soon.
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '80px', alignItems: 'start' }}>
+            {/* Info */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '48px' }}>
+              <p style={{ fontSize: '0.875rem', lineHeight: 1.9, color: '#7a6650', margin: 0 }}>
+                Whether you want to share a memory, collaborate, or just say hello — I'd love to hear from you. Every conversation starts with a moment.
+              </p>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+                <div>
+                  <p style={{ fontSize: '10px', letterSpacing: '0.3em', textTransform: 'uppercase', color: '#b8936a', marginBottom: '6px' }}>Email</p>
+                  <a href="mailto:aiko.esguerra@gmail.com" style={{ fontSize: '0.875rem', color: '#2c1f0e', textDecoration: 'none' }}>aiko.esguerra@gmail.com</a>
+                </div>
+                <div>
+                  <p style={{ fontSize: '10px', letterSpacing: '0.3em', textTransform: 'uppercase', color: '#b8936a', marginBottom: '6px' }}>Based in</p>
+                  <p style={{ fontSize: '0.875rem', color: '#7a6650', margin: 0 }}>Philippines</p>
+                </div>
               </div>
-            )}
-            {status === "error" && (
-              <div className="flex items-center gap-3 text-sm text-red-400 border border-red-800/40 rounded-xl px-4 py-3 bg-red-500/5">
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 5v4M8 11v1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/><circle cx="8" cy="8" r="6" stroke="currentColor" strokeWidth="1.5"/></svg>
-                Something went wrong. Please try emailing directly.
+              <div style={{ borderTop: '1px solid #d6c9b4', paddingTop: '28px' }}>
+                <p style={{ fontSize: '10px', letterSpacing: '0.3em', textTransform: 'uppercase', color: '#b8936a', marginBottom: '8px' }}>Response time</p>
+                <p style={{ fontSize: '0.875rem', color: '#b8a88a', margin: 0 }}>Usually within 24–48 hours.</p>
               </div>
-            )}
+            </div>
 
-            <button
-              type="submit"
-              disabled={status === "sending" || !name.trim() || !email.trim() || !message.trim()}
-              className="w-max inline-flex items-center gap-3 text-[11px] tracking-[0.2em] uppercase text-amber-400 border border-amber-800/60 rounded-full px-8 py-4 hover:border-amber-500 hover:bg-amber-500/5 transition-all duration-300 disabled:opacity-40 disabled:cursor-not-allowed mt-2"
-            >
-              {status === "sending" ? (
-                <>
-                  <svg className="animate-spin" width="12" height="12" viewBox="0 0 12 12" fill="none">
-                    <circle cx="6" cy="6" r="4" stroke="currentColor" strokeWidth="1.5" strokeDasharray="6 6"/>
-                  </svg>
-                  Sending…
-                </>
-              ) : (
-                <>
-                  Send message
-                  <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 6h10M7 2l4 4-4 4" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/></svg>
-                </>
+            {/* Form */}
+            <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}>
+              {[
+                { label: 'Your name', type: 'text', val: name, set: setName, ph: 'What should I call you?' },
+                { label: 'Email address', type: 'email', val: email, set: setEmail, ph: 'your@email.com' },
+              ].map(({ label, type, val, set, ph }) => (
+                <div key={label} style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                  <label style={{ fontSize: '10px', letterSpacing: '0.3em', textTransform: 'uppercase', color: '#b8a88a' }}>{label}</label>
+                  <input type={type} value={val} onChange={e => set(e.target.value)} placeholder={ph} required
+                    disabled={status === "sending"} className="c-field" style={baseInput} />
+                </div>
+              ))}
+
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                <label style={{ fontSize: '10px', letterSpacing: '0.3em', textTransform: 'uppercase', color: '#b8a88a' }}>Message</label>
+                <textarea value={message} onChange={e => setMessage(e.target.value)} placeholder="Tell me about a moment…"
+                  required rows={5} disabled={status === "sending"} className="c-field"
+                  style={{ ...baseInput, resize: 'none' }} />
+              </div>
+
+              {status === "success" && (
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '0.8rem', color: '#5a8a6a', border: '1px solid #a8c9b4', borderRadius: '10px', padding: '12px 16px', background: 'rgba(168,201,180,0.12)' }}>
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 8l4 4 8-8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                  Message sent! I'll get back to you soon.
+                </div>
               )}
-            </button>
-          </form>
+              {status === "error" && (
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '0.8rem', color: '#c0392b', border: '1px solid #e8b4a8', borderRadius: '10px', padding: '12px 16px', background: 'rgba(192,57,43,0.06)' }}>
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 5v4M8 11v1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/><circle cx="8" cy="8" r="6" stroke="currentColor" strokeWidth="1.5"/></svg>
+                  Something went wrong. Please try emailing directly.
+                </div>
+              )}
+
+              <button type="submit" className="c-btn" disabled={status === "sending" || !name.trim() || !email.trim() || !message.trim()}>
+                {status === "sending" ? (
+                  <><svg className="spin" width="12" height="12" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="4" stroke="currentColor" strokeWidth="1.5" strokeDasharray="6 6"/></svg>Sending…</>
+                ) : (
+                  <>Send message<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 6h10M7 2l4 4-4 4" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/></svg></>
+                )}
+              </button>
+            </form>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
