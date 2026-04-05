@@ -11,4 +11,4 @@ export interface NavLink {
   href: string;
 }
 
-export type Page = "home" | "gallery";
+export type Page = "home" | "gallery" | "contact";
