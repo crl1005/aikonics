@@ -66,13 +66,22 @@ export default function Header({ page, setPage }: HeaderProps) {
         .nav-btn:hover::after { transform: scaleX(1); }
         .nav-btn.active { color: #b8936a; }
         .nav-btn.active::after { transform: scaleX(1); }
-
-        .hidden-mobile { display: flex; }
-        .show-mobile { display: none !important; }
+        .header-inner {
+          max-width: 1280px;
+          margin: 0 auto;
+          padding: 0 56px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+        }
+        .desktop-nav { display: flex; align-items: center; gap: 36px; }
+        .hamburger { display: none !important; }
+        .mobile-menu-nav .nav-btn { font-size: 13px; }
 
         @media (max-width: 768px) {
-          .hidden-mobile { display: none !important; }
-          .show-mobile { display: flex !important; }
+          .header-inner { padding: 0 24px; }
+          .desktop-nav { display: none !important; }
+          .hamburger { display: flex !important; flex-direction: column; gap: 5px; }
         }
       `}</style>
 
@@ -87,8 +96,7 @@ export default function Header({ page, setPage }: HeaderProps) {
           padding: scrolled ? '14px 0' : '24px 0',
         }}
       >
-        <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 56px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-
+        <div className="header-inner">
           {/* Logo */}
           <button onClick={() => goTo("home")} style={{ background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left', padding: 0 }}>
             <div className="header-logo-text" style={{ fontSize: '1.35rem', fontWeight: 300, color: '#2c1f0e', lineHeight: 1, letterSpacing: '0.01em' }}>Aikonics</div>
@@ -96,7 +104,7 @@ export default function Header({ page, setPage }: HeaderProps) {
           </button>
 
           {/* Desktop nav */}
-          <nav className="hidden-mobile" style={{ alignItems: 'center', gap: '36px' }}>
+          <nav className="desktop-nav">
             <button className="nav-btn" onClick={() => scrollTo("#work")}>Moments</button>
             <button className="nav-btn" onClick={() => scrollTo("#about")}>About</button>
             <button className={`nav-btn ${page === 'contact' ? 'active' : ''}`} onClick={() => goTo("contact")}>Contact</button>
@@ -105,8 +113,8 @@ export default function Header({ page, setPage }: HeaderProps) {
           {/* Mobile hamburger */}
           <button
             onClick={() => setMenuOpen(!menuOpen)}
-            className="show-mobile"
-            style={{ background: 'none', border: 'none', cursor: 'pointer', flexDirection: 'column', gap: '5px', padding: '4px' }}
+            className="hamburger"
+            style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '4px' }}
           >
             <span style={{ display: 'block', width: '22px', height: '1px', background: '#2c1f0e', transition: 'all 0.3s', transform: menuOpen ? 'rotate(45deg) translate(4px, 4px)' : 'none' }} />
             <span style={{ display: 'block', width: '22px', height: '1px', background: '#2c1f0e', transition: 'all 0.3s', opacity: menuOpen ? 0 : 1 }} />
@@ -116,10 +124,11 @@ export default function Header({ page, setPage }: HeaderProps) {
 
         {/* Mobile menu */}
         {menuOpen && (
-          <div style={{
+          <div className="mobile-menu-nav" style={{
             background: 'rgba(245,240,232,0.98)', backdropFilter: 'blur(16px)',
             borderTop: '1px solid rgba(201,185,154,0.4)',
-            padding: '24px 56px', display: 'flex', flexDirection: 'column', gap: '20px',
+            padding: '28px 24px',
+            display: 'flex', flexDirection: 'column', gap: '24px',
           }}>
             <button className="nav-btn" onClick={() => scrollTo("#work")}>Moments</button>
             <button className="nav-btn" onClick={() => scrollTo("#about")}>About</button>

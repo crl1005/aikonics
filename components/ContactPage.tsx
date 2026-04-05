@@ -64,21 +64,39 @@ export default function ContactPage({ setPage }: ContactPageProps) {
         .c-btn:disabled { opacity: 0.4; cursor: not-allowed; }
         @keyframes spin { to { transform: rotate(360deg); } }
         .spin { animation: spin 1s linear infinite; }
+
+        .contact-inner {
+          max-width: 1280px;
+          margin: 0 auto;
+          padding: 0 56px;
+        }
+        .contact-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 80px;
+          align-items: start;
+        }
+        @media (max-width: 768px) {
+          .contact-inner { padding: 0 24px; }
+          .contact-grid {
+            grid-template-columns: 1fr;
+            gap: 48px;
+          }
+        }
       `}</style>
 
       <div className="c-root" style={{ minHeight: '100vh', background: '#f5f0e8', paddingTop: '128px', paddingBottom: '96px' }}>
-        <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 56px' }}>
-
-          <div style={{ marginBottom: '80px' }}>
+        <div className="contact-inner">
+          <div style={{ marginBottom: '64px' }}>
             <p style={{ fontSize: '10px', letterSpacing: '0.4em', textTransform: 'uppercase', color: '#b8936a', marginBottom: '16px' }}>Get in touch</p>
-            <h1 className="c-serif" style={{ fontSize: 'clamp(3rem, 6vw, 5.5rem)', fontWeight: 300, color: '#2c1f0e', lineHeight: 0.95, margin: 0 }}>
+            <h1 className="c-serif" style={{ fontSize: 'clamp(2.5rem, 6vw, 5.5rem)', fontWeight: 300, color: '#2c1f0e', lineHeight: 0.95, margin: 0 }}>
               Let's talk<br /><em style={{ color: '#b8936a' }}>about moments.</em>
             </h1>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '80px', alignItems: 'start' }}>
+          <div className="contact-grid">
             {/* Info */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '48px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '40px' }}>
               <p style={{ fontSize: '0.875rem', lineHeight: 1.9, color: '#7a6650', margin: 0 }}>
                 Whether you want to share a memory, collaborate, or just say hello — I'd love to hear from you. Every conversation starts with a moment.
               </p>

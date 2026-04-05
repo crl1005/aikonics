@@ -81,22 +81,14 @@ export default function HomePage({ setPage }: HomePageProps) {
         .home-root { font-family: 'DM Sans', sans-serif; }
         .font-serif-custom { font-family: 'Cormorant Garamond', serif; }
 
-        /* grain overlay */
         .grain::after {
           content: '';
-          position: fixed;
-          inset: 0;
+          position: fixed; inset: 0;
           background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-          pointer-events: none;
-          z-index: 999;
-          opacity: 0.35;
+          pointer-events: none; z-index: 999; opacity: 0.35;
         }
 
-        .hero-img {
-          object-position: center top;
-          object-fit: cover;
-        }
-
+        .hero-img { object-position: center top; object-fit: cover; }
         .moment-card:hover .moment-overlay { opacity: 1; }
         .moment-card:hover img,
         .moment-card:hover video { transform: scale(1.04); }
@@ -111,31 +103,117 @@ export default function HomePage({ setPage }: HomePageProps) {
         .anim-4 { animation: fadeSlideUp 0.9s 0.7s both; }
 
         .tag-pill {
-          display: inline-flex;
-          align-items: center;
-          gap: 6px;
-          font-size: 10px;
-          letter-spacing: 0.18em;
-          text-transform: uppercase;
-          padding: 5px 14px;
-          border-radius: 999px;
-          border: 1px solid #c9b99a;
-          color: #8a7055;
+          display: inline-flex; align-items: center; gap: 6px;
+          font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
+          padding: 5px 14px; border-radius: 999px;
+          border: 1px solid #c9b99a; color: #8a7055;
           background: rgba(201,185,154,0.12);
         }
 
         .divider-ornament {
-          display: flex;
-          align-items: center;
-          gap: 16px;
-          color: #c9b99a;
+          display: flex; align-items: center; gap: 16px; color: #c9b99a;
         }
-        .divider-ornament::before,
-        .divider-ornament::after {
-          content: '';
-          flex: 1;
-          height: 1px;
+        .divider-ornament::before, .divider-ornament::after {
+          content: ''; flex: 1; height: 1px;
           background: linear-gradient(90deg, transparent, #c9b99a80, transparent);
+        }
+
+        /* ── LAYOUT CLASSES ── */
+        .section-px { padding-left: 56px; padding-right: 56px; }
+
+        .intro-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 80px;
+          align-items: center;
+        }
+
+        .meaning-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+        }
+
+        .meaning-cell-left {
+          padding: 64px 56px;
+          border-right: 1px solid #d6c9b4;
+        }
+
+        .meaning-cell-right {
+          padding: 64px 56px;
+        }
+
+        .moments-header {
+          display: flex;
+          align-items: flex-end;
+          justify-content: space-between;
+          margin-bottom: 56px;
+        }
+
+        .moments-grid {
+          display: grid;
+          gap: 3px;
+          grid-template-columns: repeat(3, 1fr);
+        }
+
+        .about-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 80px;
+          align-items: center;
+        }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 900px) {
+          .section-px { padding-left: 32px; padding-right: 32px; }
+          .intro-grid { gap: 48px; }
+          .meaning-cell-left { padding: 48px 32px; }
+          .meaning-cell-right { padding: 48px 32px; }
+          .about-grid { gap: 48px; }
+        }
+
+        @media (max-width: 768px) {
+          .section-px { padding-left: 24px; padding-right: 24px; }
+
+          .intro-grid {
+            grid-template-columns: 1fr;
+            gap: 32px;
+          }
+
+          .meaning-grid {
+            grid-template-columns: 1fr;
+          }
+
+          .meaning-cell-left {
+            padding: 40px 24px;
+            border-right: none;
+            border-bottom: 1px solid #d6c9b4;
+          }
+
+          .meaning-cell-right {
+            padding: 40px 24px;
+          }
+
+          .moments-header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 20px;
+            margin-bottom: 32px;
+          }
+
+          .moments-grid {
+            grid-template-columns: repeat(2, 1fr) !important;
+          }
+
+          .about-grid {
+            grid-template-columns: 1fr;
+            gap: 32px;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .moments-grid {
+            grid-template-columns: 1fr !important;
+          }
         }
       `}</style>
 
@@ -143,8 +221,6 @@ export default function HomePage({ setPage }: HomePageProps) {
 
         {/* ── HERO ── */}
         <section id="hero" className="relative min-h-screen flex items-center overflow-hidden bg-[#f5f0e8]">
-
-          {/* Full bleed image — person clearly visible */}
           <div className="absolute inset-0">
             <img
               src="/images/aiko.png"
@@ -156,23 +232,21 @@ export default function HomePage({ setPage }: HomePageProps) {
                 filter: 'brightness(0.92) contrast(1.04) saturate(0.95)',
               }}
             />
-            {/* Soft left-side overlay for text readability only */}
             <div style={{
               position: 'absolute', inset: 0,
-              background: 'linear-gradient(100deg, rgba(245,240,232,0.88) 0%, rgba(245,240,232,0.55) 45%, rgba(245,240,232,0.0) 70%)',
+              background: 'linear-gradient(100deg, rgba(245,240,232,0.92) 0%, rgba(245,240,232,0.6) 50%, rgba(245,240,232,0.0) 75%)',
             }} />
           </div>
 
-          {/* Text — left side only */}
-          <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-14 w-full py-32">
-            <div className="max-w-lg">
+          <div className="relative z-10 w-full py-32 section-px" style={{ maxWidth: '1280px', margin: '0 auto' }}>
+            <div style={{ maxWidth: '460px' }}>
               <div className="tag-pill anim-1 mb-8" style={{ width: 'fit-content' }}>
                 <span style={{ width: 5, height: 5, borderRadius: '50%', background: '#b8936a', display: 'inline-block' }} />
                 A personal archive
               </div>
 
               <h1 className="font-serif-custom anim-2" style={{
-                fontSize: 'clamp(3.8rem, 8vw, 7rem)',
+                fontSize: 'clamp(3.2rem, 8vw, 7rem)',
                 fontWeight: 300,
                 lineHeight: 0.92,
                 color: '#2c1f0e',
@@ -195,18 +269,10 @@ export default function HomePage({ setPage }: HomePageProps) {
               </p>
 
               <a href="#work" className="anim-4" style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '10px',
-                fontSize: '11px',
-                letterSpacing: '0.18em',
-                textTransform: 'uppercase',
-                color: '#2c1f0e',
-                border: '1px solid #2c1f0e',
-                borderRadius: '999px',
-                padding: '14px 28px',
-                textDecoration: 'none',
-                transition: 'all 0.3s',
+                display: 'inline-flex', alignItems: 'center', gap: '10px',
+                fontSize: '11px', letterSpacing: '0.18em', textTransform: 'uppercase',
+                color: '#2c1f0e', border: '1px solid #2c1f0e', borderRadius: '999px',
+                padding: '14px 28px', textDecoration: 'none', transition: 'all 0.3s',
               }}
                 onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = '#2c1f0e'; (e.currentTarget as HTMLElement).style.color = '#f5f0e8'; }}
                 onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = 'transparent'; (e.currentTarget as HTMLElement).style.color = '#2c1f0e'; }}
@@ -217,7 +283,6 @@ export default function HomePage({ setPage }: HomePageProps) {
             </div>
           </div>
 
-          {/* Bottom fade into next section */}
           <div style={{
             position: 'absolute', bottom: 0, left: 0, right: 0, height: '120px',
             background: 'linear-gradient(to top, #f5f0e8, transparent)',
@@ -227,21 +292,16 @@ export default function HomePage({ setPage }: HomePageProps) {
 
         {/* ── INTRO QUOTE ── */}
         <section id="intro" style={{ background: '#f5f0e8', padding: '96px 0' }}>
-          <div className="max-w-7xl mx-auto px-6 md:px-14">
+          <div className="section-px" style={{ maxWidth: '1280px', margin: '0 auto' }}>
             <div className="divider-ornament" style={{ marginBottom: '64px', fontSize: '10px', letterSpacing: '0.3em', textTransform: 'uppercase', color: '#b8936a' }}>
               Why I do this
             </div>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '80px', alignItems: 'center' }}
-              className="md:grid-cols-2 grid-cols-1">
+            <div className="intro-grid">
               <blockquote className="font-serif-custom" style={{
-                fontSize: 'clamp(1.6rem, 3vw, 2.4rem)',
-                fontWeight: 300,
-                color: '#2c1f0e',
-                lineHeight: 1.45,
-                fontStyle: 'italic',
-                margin: 0,
-                borderLeft: '2px solid #b8936a',
-                paddingLeft: '28px',
+                fontSize: 'clamp(1.4rem, 3vw, 2.4rem)',
+                fontWeight: 300, color: '#2c1f0e', lineHeight: 1.45,
+                fontStyle: 'italic', margin: 0,
+                borderLeft: '2px solid #b8936a', paddingLeft: '28px',
               }}>
                 "I don't want to look back one day and realize I forgot what it felt like."
               </blockquote>
@@ -254,31 +314,30 @@ export default function HomePage({ setPage }: HomePageProps) {
 
         {/* ── MEANING CARDS ── */}
         <section style={{ background: '#ede7db', borderTop: '1px solid #d6c9b4', borderBottom: '1px solid #d6c9b4' }}>
-          <div className="max-w-7xl mx-auto" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr' }}>
-            {[
-              { word: 'aiko', pos: 'noun', desc: 'Japanese origin — meaning love and child. Aikonics is intimacy in motion.', accent: 'love · child', sub: 'Japanese · 愛子' },
-              { word: 'journey', pos: 'noun', desc: 'The act of traveling through places, time, and emotion — a slow unfolding of life held close.', accent: null, sub: 'Old French · journée' },
-            ].map(({ word, pos, desc, sub }) => (
-              <div key={word} style={{
-                padding: '64px 56px',
-                borderRight: word === 'aiko' ? '1px solid #d6c9b4' : 'none',
-              }}>
-                <h3 className="font-serif-custom" style={{ fontSize: 'clamp(3rem, 5vw, 5rem)', fontWeight: 300, color: '#2c1f0e', marginBottom: '8px', lineHeight: 1 }}>{word}</h3>
-                <p style={{ fontSize: '10px', letterSpacing: '0.3em', textTransform: 'uppercase', color: '#b8936a', marginBottom: '20px' }}>{pos}</p>
-                <p style={{ fontSize: '0.875rem', lineHeight: 1.8, color: '#7a6650', marginBottom: '20px' }}>{desc}</p>
-                <span style={{ fontSize: '10px', letterSpacing: '0.25em', textTransform: 'uppercase', color: '#b8a88a' }}>{sub}</span>
-              </div>
-            ))}
+          <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
+            <div className="meaning-grid">
+              {[
+                { word: 'aiko', pos: 'noun', desc: 'Japanese origin — meaning love and child. Aikonics is intimacy in motion.', sub: 'Japanese · 愛子', left: true },
+                { word: 'journey', pos: 'noun', desc: 'The act of traveling through places, time, and emotion — a slow unfolding of life held close.', sub: 'Old French · journée', left: false },
+              ].map(({ word, pos, desc, sub, left }) => (
+                <div key={word} className={left ? 'meaning-cell-left' : 'meaning-cell-right'}>
+                  <h3 className="font-serif-custom" style={{ fontSize: 'clamp(2.5rem, 5vw, 5rem)', fontWeight: 300, color: '#2c1f0e', marginBottom: '8px', lineHeight: 1 }}>{word}</h3>
+                  <p style={{ fontSize: '10px', letterSpacing: '0.3em', textTransform: 'uppercase', color: '#b8936a', marginBottom: '20px' }}>{pos}</p>
+                  <p style={{ fontSize: '0.875rem', lineHeight: 1.8, color: '#7a6650', marginBottom: '20px' }}>{desc}</p>
+                  <span style={{ fontSize: '10px', letterSpacing: '0.25em', textTransform: 'uppercase', color: '#b8a88a' }}>{sub}</span>
+                </div>
+              ))}
+            </div>
           </div>
         </section>
 
         {/* ── MOMENTS GRID ── */}
         <section id="work" style={{ background: '#f5f0e8', padding: '96px 0' }}>
-          <div className="max-w-7xl mx-auto px-6 md:px-14">
-            <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', marginBottom: '56px' }}>
+          <div className="section-px" style={{ maxWidth: '1280px', margin: '0 auto' }}>
+            <div className="moments-header">
               <div>
                 <p style={{ fontSize: '10px', letterSpacing: '0.35em', textTransform: 'uppercase', color: '#b8936a', marginBottom: '12px' }}>Archive</p>
-                <h2 className="font-serif-custom" style={{ fontSize: 'clamp(2rem, 4vw, 3.5rem)', fontWeight: 300, color: '#2c1f0e', lineHeight: 1.1 }}>Captured Moments</h2>
+                <h2 className="font-serif-custom" style={{ fontSize: 'clamp(1.8rem, 4vw, 3.5rem)', fontWeight: 300, color: '#2c1f0e', lineHeight: 1.1 }}>Captured Moments</h2>
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
                 <button
@@ -319,7 +378,7 @@ export default function HomePage({ setPage }: HomePageProps) {
                 </button>
               </div>
             ) : (
-              <div style={{ display: 'grid', gap: '3px', gridTemplateColumns: 'repeat(3, 1fr)' }}>
+              <div className="moments-grid">
                 {moments.slice(0, 6).map((item, i) => (
                   <div
                     key={item.id}
@@ -357,10 +416,10 @@ export default function HomePage({ setPage }: HomePageProps) {
 
         {/* ── ABOUT ── */}
         <section id="about" style={{ background: '#ede7db', borderTop: '1px solid #d6c9b4', padding: '96px 0' }}>
-          <div className="max-w-7xl mx-auto px-6 md:px-14" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '80px', alignItems: 'center' }}>
+          <div className="section-px about-grid" style={{ maxWidth: '1280px', margin: '0 auto' }}>
             <div>
               <p style={{ fontSize: '10px', letterSpacing: '0.35em', textTransform: 'uppercase', color: '#b8936a', marginBottom: '20px' }}>About</p>
-              <h2 className="font-serif-custom" style={{ fontSize: 'clamp(2.4rem, 4vw, 4rem)', fontWeight: 300, color: '#2c1f0e', lineHeight: 1.1, marginBottom: '0' }}>
+              <h2 className="font-serif-custom" style={{ fontSize: 'clamp(2rem, 4vw, 4rem)', fontWeight: 300, color: '#2c1f0e', lineHeight: 1.1, marginBottom: '0' }}>
                 Just someone<br />who loves<br /><em style={{ color: '#b8936a' }}>being present.</em>
               </h2>
             </div>
@@ -423,8 +482,7 @@ export default function HomePage({ setPage }: HomePageProps) {
                   border: `2px dashed ${dragOver ? '#b8936a' : '#c9b99a'}`,
                   background: dragOver ? 'rgba(184,147,106,0.06)' : '#ede7db',
                   cursor: uploading ? 'not-allowed' : 'pointer',
-                  position: 'relative', overflow: 'hidden',
-                  transition: 'all 0.2s',
+                  position: 'relative', overflow: 'hidden', transition: 'all 0.2s',
                 }}
               >
                 {preview ? (
@@ -444,7 +502,8 @@ export default function HomePage({ setPage }: HomePageProps) {
                 )}
               </div>
 
-              <input ref={fileRef} type="file" accept="image/*,video/*" style={{ display: 'none' }} onChange={e => { const f = e.target.files?.[0]; if (f) handleFile(f); }} disabled={uploading} />
+              <input ref={fileRef} type="file" accept="image/*,video/*" style={{ display: 'none' }}
+                onChange={e => { const f = e.target.files?.[0]; if (f) handleFile(f); }} disabled={uploading} />
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                 <label style={{ fontSize: '10px', letterSpacing: '0.2em', textTransform: 'uppercase', color: '#b8a88a' }}>Title</label>
@@ -454,8 +513,7 @@ export default function HomePage({ setPage }: HomePageProps) {
                   style={{
                     background: '#ede7db', border: '1px solid #c9b99a', borderRadius: '8px',
                     padding: '12px 16px', fontSize: '0.875rem', color: '#2c1f0e',
-                    outline: 'none', transition: 'border-color 0.2s',
-                    fontFamily: 'DM Sans, sans-serif',
+                    outline: 'none', transition: 'border-color 0.2s', fontFamily: 'DM Sans, sans-serif',
                   }}
                   onFocus={e => (e.target.style.borderColor = '#b8936a')}
                   onBlur={e => (e.target.style.borderColor = '#c9b99a')}
